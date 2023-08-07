@@ -1,4 +1,4 @@
-# ifndef	MINISEHLL_H
+# ifndef	MINISHELL_H
 # define	MINISHELL_H
 /* -- include line -- */
 # include <unistd.h>
@@ -72,7 +72,7 @@ typedef struct s_data
 /* init - ft_base_a.c */
 size_t	ft_strlen(const	char *str);
 char	*ft_strncat(char *dest, char *src, int n);
-char 	*ft_strtok(char *str, const char *delim);
+char 	*ft_strtok(char *str, char *delim);
 /* init - ft_base.c */
 char	*ft_strdup(const char *s1);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -85,6 +85,8 @@ t_list	*ft_lstlast(t_list *lst);
 int		ft_lstsize(t_list *lst);
 /* init - ft_base_b.c*/
 int	ft_isalnum(int c);
+int	ft_isalpha(int c);
+int	ft_isdigit(int c);
 
 /* lex - lexer.c */
 void	lexer(t_data *data);
@@ -114,16 +116,32 @@ bool	check_all(t_data *data, t_token **token, int *i);
 /* lex- - d_sign.c */
 bool	pre_check(t_data *data, t_token **token);
 void	not_env(t_data *data, t_token **token, int *i, char *var);
-bool    possible_env(t_data *data, t_token **token, int *i, char *var);
-char    *possible_env_char(t_data *data, t_token **token, int *i, char *var);
+bool    possible_env(t_data *data, t_token **token, char *var);
+char    *possible_env_char(t_data *data, char *var);
+bool	check_heredoc(t_data *data, t_token **token, int *i);
 /* etc - env.c */
 t_list	*ft_lstnews();
 void	env_init(t_data *data, char **env);
 void    get_envp(t_data *data);
 char    *find_envp(t_data *data, char *key);
+/* syntax - syntax.c */
+void	syntax(t_data *data);
+void	syntax_cmd(t_list	*cur);
+void 	syntax_arg(t_list *cur);
+void	syntax_redirect(t_list	*cur);
+void	syntax_pipe(t_list	*cur);
+/* tree - init_leaf.c */
+t_leaf	*create_leaf(int leaf_type, t_leaf *parent);
+void	init_leaf(t_data *data);
+void	create_pipe(t_leaf **cur);
+/* tree - add_leaf.c */
+void tree_left_right(t_leaf *cur_leaf, t_list *cur_token);
+t_bool tree_add_left(t_leaf *parent, t_token *new_token, int leaf_type);
+t_bool tree_add_right(t_leaf *parent, t_token *new_token, int leaf_type);
 
 
-
+/* tree_recursive - */
+void print_tree_recursive(t_leaf *node, int level);
 
 
 #endif

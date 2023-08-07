@@ -44,7 +44,7 @@ void	not_env(t_data *data, t_token **token, int *i, char *var)
 	(*i) -= (var_len + 1);
 }
 
-bool    possible_env(t_data *data, t_token **token, int *i, char *var)
+bool    possible_env(t_data *data, t_token **token, char *var)
 {
     char *temp;
 
@@ -61,7 +61,7 @@ bool    possible_env(t_data *data, t_token **token, int *i, char *var)
     return 1;
 }
 
-char    *possible_env_char(t_data *data, t_token **token, int *i, char *var)
+char    *possible_env_char(t_data *data, char *var)
 {
     char    *temp;
 
@@ -73,4 +73,15 @@ char    *possible_env_char(t_data *data, t_token **token, int *i, char *var)
         return (value);
     }
     return NULL;
+}
+
+bool	check_heredoc(t_data *data, t_token **token, int *i)
+{
+	if (data->tokens && data->tokens->token->re_type == T_HEREDOC)
+	{
+		(*token)->str = ft_strncat((*token)->str, "$", 1);
+		--(*i);
+		return (1);
+	}
+	return (0);
 }

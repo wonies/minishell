@@ -81,7 +81,7 @@ void	check_dsign(t_data *data, t_token **token, int *i)
         }
 		var = ft_strncat(var, &data->input[(*i)++], 1);
 	}
-	if (possible_env(data, token, i, var))
+	if (possible_env(data, token, var))
 		not_env(data, token, i, var);
 }
 

@@ -57,7 +57,7 @@ void	quote_dsign(t_data *data, t_token **token, int *i)
 			break ;
 		temp = ft_strncat(temp, &data->input[(*i)++], 1);
 	}
-	prove_env = possible_env_char(data, token, i, temp);
+	prove_env = possible_env_char(data, temp);
 	if (prove_env)
 		(*token)->str = ft_strncat((*token)->str, prove_env, ft_strlen(prove_env));
 	else

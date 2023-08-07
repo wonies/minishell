@@ -10,7 +10,7 @@ void	lexer(t_data *data)
 	list = NULL;
 	token = new_token();
 	if (!token)
-		err_msg("bash");
+		err_msg("bash:");
 	while (data->input[++i])
 		input_token(data, &token, &i);
 	if (*(token)->str)

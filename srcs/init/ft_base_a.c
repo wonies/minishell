@@ -6,7 +6,7 @@
 /*   By: wonhshin <wonhshin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:43:28 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/07/19 21:43:31 by wonhshin         ###   ########.fr       */
+/*   Updated: 2023/08/07 23:46:12 by wonhshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*ft_strncat(char *dest, char *src, int n)
 	return (res);
 }
 
-char	*ft_strtok(char *str, const char *delim)
+char	*ft_strtok(char *str, char *delim)
 {
 	char	*buffer;
 	char	*deli;
@@ -59,7 +59,7 @@ char	*ft_strtok(char *str, const char *delim)
 		{
 			if (*buffer == *deli)
 			{
-				*buffer = NULL;
+				// *buffer = NULL;
 				++deli;
 				return (str);
 			}

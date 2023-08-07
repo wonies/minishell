@@ -5,7 +5,6 @@ int main(int ac, char **av, char **env)
     (void)ac;
     (void)av;
 
-    t_list *list = NULL;
     t_data *data = NULL;
 
     data = new_data();

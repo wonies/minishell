@@ -1,7 +1,6 @@
 #include "../includes/minishell.h"
 
 void print_tree_recursive(t_leaf *node, int level)
-
 {
     if (!node)
         return;

@@ -6,11 +6,11 @@ RM = rm -f
 
 HEADER	=	includes/minishell.h
 
-SRCS = minishell.c \
-	print_recursive.c \
+SRCS =	srcs/minishell.c \
+	srcs/print_recursive.c \
 	srcs/init/ft_base_a.c \
 	srcs/init/ft_base_b.c \
-	srcs/init/ft_base_token.c.c \
+	srcs/init/ft_base_token.c \
 	srcs/init/ft_base.c \
 	srcs/init/ft_lst.c \
 	srcs/lex/d_sign.c \
@@ -28,19 +28,17 @@ SRCS = minishell.c \
 
 M_OBJS = $(SRCS:%.c=%.o)
 
-all :
-	$(NAME)
+all : $(NAME)
 
 %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME):	$(OBJS) $(HEADER)
-	$(CC) $(CFLAGS) -o $(NAME) $(M_OBJS)
+$(NAME):	$(M_OBJS) $(HEADER)	-lreadline -L ~/.brew/opt/readline/lib
+	$(CC) $(CFLAGS) -o $(NAME) -fsanitize=address
 
 clean:
-	# $(RM) $(OBJS)
 	$(RM) $(M_OBJS)
-	
+
 fclean: 
 	make clean
 	$(RM) $(NAME)
