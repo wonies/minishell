@@ -67,6 +67,9 @@ void	check_dsign(t_data *data, t_token **token, int *i)
 
 	++(*i);
 	var = ft_strdup("");
+	int al_flag;
+
+	al_flag = 0;
 	if (!var)
 		return ;
 	if (check_all(data, token, i))
@@ -77,12 +80,22 @@ void	check_dsign(t_data *data, t_token **token, int *i)
 		if (ft_isalnum(data->input[*i]) == 0)
         {
             --(*i);
+			al_flag = 114;
             break ;
         }
 		var = ft_strncat(var, &data->input[(*i)++], 1);
 	}
 	if (possible_env(data, token, var))
 		not_env(data, token, i, var);
+	else
+	{
+		if (al_flag == 114)
+		{
+			while (data->input[*i])
+				(*token)->str = ft_strncat((*token)->str, &data->input[++(*i)], 1);
+		}
+		token_to_list(&data->tokens, token, 1);
+	}
 }
 
 bool	check_all(t_data *data, t_token **token, int *i)

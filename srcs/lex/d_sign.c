@@ -46,17 +46,18 @@ void	not_env(t_data *data, t_token **token, int *i, char *var)
 
 bool    possible_env(t_data *data, t_token **token, char *var)
 {
-    char *temp;
+    char	*temp;
+	char	*value;
 
     temp = find_envp(data, var);
     if (temp != NULL)
     {
         if (!(*(*token)->str))
             (*token) = new_token();
-        char *value = ft_strtok(temp, "=");
+        value = ft_strtok(temp, "=");
         value = ft_strtok(NULL, "=");
         (*token)->str = ft_strncat((*token)->str, value, ft_strlen(value));
-		token_to_list(&data->tokens, token, 1);
+		// token_to_list(&data->tokens, token, 1);
         return 0;
     }
     return 1;
@@ -65,12 +66,13 @@ bool    possible_env(t_data *data, t_token **token, char *var)
 char    *possible_env_char(t_data *data, char *var)
 {
     char    *temp;
+	char	*value;
 
     temp = find_envp(data, var);
 	printf("temp : %s\n", temp);
     if (temp != NULL)
     {
-        char *value = ft_strtok(temp, "=");
+        value = ft_strtok(temp, "=");
         value = ft_strtok(NULL, "=");
 		printf("value is : %s\n", value);
         return (value);

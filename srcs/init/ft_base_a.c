@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_base_a.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wonhshin <wonhshin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wonhshin <wonhshin@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:43:28 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/08 13:51:22 by wonhshin         ###   ########.fr       */
+/*   Updated: 2023/08/08 19:05:11 by wonhshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,31 +43,45 @@ char	*ft_strncat(char *dest, char *src, int n)
 	return (res);
 }
 
-char *ft_strtok(char *str,  char *delim)
+
+// ft_find_delim 함수: 문자열 str에서 delim에 포함된 문자들 중 어느 하나가 처음으로 등장하는 위치를 찾습니다.
+char *ft_find_delim(char *str, char *delim)
 {
-    static char *buffer = NULL;
+    char	*deli;
+	
+	deli = NULL;
+	while (*str)
+    {
+        deli = delim;
+        while (*deli)
+        {
+            if (*str == *deli)
+                return (str);
+            ++deli;
+        }
+        ++str;
+    }
+    return (NULL);
+}
+// ft_strtok 함수: 문자열 str에서 delim에 포함된 문자들을 기준으로 문자열을 분리하여 반환합니다.
+char *ft_strtok(char *str, char *delim)
+{
+    static char *buffer;
+	char	*token_start;
+	char	*token_end;
+
     if (str != NULL)
         buffer = str;
-
     if (buffer == NULL || *buffer == '\0')
-        return NULL;
-
-    char *token_start = buffer;
-    char *token_end = strpbrk(buffer, delim);
-
+        return (NULL);
+    token_start = buffer;
+    token_end = ft_find_delim(buffer, delim);
     if (token_end != NULL)
     {
         *token_end = '\0';
         buffer = token_end + 1;
     }
     else
-    {
         buffer += strlen(buffer);
-    }
-
-    return token_start;
+    return (token_start);
 }
-
-
-
-
