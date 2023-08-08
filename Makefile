@@ -16,8 +16,8 @@ SRCS =	srcs/minishell.c \
 	srcs/init/ft_lst.c \
 	srcs/lex/d_sign.c \
 	srcs/lex/d_signcheck.c \
+	srcs/lex/d_signvar.c \
 	srcs/lex/lexer.c \
-	srcs/lex/prepare_lex.c \
 	srcs/lex/quote_evenodd.c \
 	srcs/lex/quote.c \
 	srcs/lex/tokenize.c \

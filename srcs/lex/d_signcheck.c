@@ -64,38 +64,20 @@ bool	check_quote(t_data *data, int *i)
 void	check_dsign(t_data *data, t_token **token, int *i)
 {
 	char	*var;
+	int al_flag;
 
 	++(*i);
 	var = ft_strdup("");
-	int al_flag;
-
 	al_flag = 0;
 	if (!var)
 		return ;
 	if (check_all(data, token, i))
 		return ;
-	while (data->input[*i] != '\0' && data->input[*i] != ' ' && data->input[*i] != '\t' \
-	&& data->input[*i] != '\'' && data->input[*i] != '\"')
-	{
-		if (ft_isalnum(data->input[*i]) == 0)
-        {
-            --(*i);
-			al_flag = 114;
-            break ;
-        }
-		var = ft_strncat(var, &data->input[(*i)++], 1);
-	}
+	var = make_var(data, i, var, &al_flag);
 	if (possible_env(data, token, var))
 		not_env(data, token, i, var);
 	else
-	{
-		if (al_flag == 114)
-		{
-			while (data->input[*i])
-				(*token)->str = ft_strncat((*token)->str, &data->input[++(*i)], 1);
-		}
-		token_to_list(&data->tokens, token, 1);
-	}
+		env_exist(data, token, i, al_flag);
 }
 
 bool	check_all(t_data *data, t_token **token, int *i)

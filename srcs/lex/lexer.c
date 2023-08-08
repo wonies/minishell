@@ -37,3 +37,4 @@ void	input_token(t_data *data, t_token **token, int *i)
 	else
 		(*token)->str = ft_strncat((*token)->str, &data->input[*i], 1);
 }
+

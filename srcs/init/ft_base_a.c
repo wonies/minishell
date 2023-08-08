@@ -6,7 +6,7 @@
 /*   By: wonhshin <wonhshin@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:43:28 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/08 19:05:11 by wonhshin         ###   ########.fr       */
+/*   Updated: 2023/08/08 22:20:39 by wonhshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ char	*ft_strncat(char *dest, char *src, int n)
 	return (res);
 }
 
-
-// ft_find_delim 함수: 문자열 str에서 delim에 포함된 문자들 중 어느 하나가 처음으로 등장하는 위치를 찾습니다.
 char *ft_find_delim(char *str, char *delim)
 {
     char	*deli;
@@ -63,7 +61,7 @@ char *ft_find_delim(char *str, char *delim)
     }
     return (NULL);
 }
-// ft_strtok 함수: 문자열 str에서 delim에 포함된 문자들을 기준으로 문자열을 분리하여 반환합니다.
+
 char *ft_strtok(char *str, char *delim)
 {
     static char *buffer;

@@ -37,3 +37,19 @@ void    redirect_check(t_data *data, t_token **token, int *i)
             (*token)->re_type = T_INPUT;
     }
 }
+
+void	token_to_list(t_list **head, t_token **token, int check)
+{
+	t_list	*new;
+
+	new = ft_lstnew(*token);
+	if (!new)
+		return ;
+	ft_lstadd_back(head, new);
+	if (check == 1)
+	{
+		*token = new_token();
+		if (!(*token))
+			err_msg("bash");
+	}
+}

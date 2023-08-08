@@ -60,7 +60,6 @@ void	quote_dsign(t_data *data, t_token **token, int *i)
 		(*token)->str = ft_strncat((*token)->str, prove_env, ft_strlen(prove_env));
 	else
 		(*i) -= ft_strlen(temp) + 1;
-	printf("quote :  %s\n", (*token)->str);
 }
 
 int	find_closing_quote(int i, char *line, char quote)

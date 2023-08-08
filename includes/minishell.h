@@ -113,12 +113,14 @@ bool	two_space(t_data *data, t_token **token, int *i, int check);
 bool	check_quote(t_data *data, int *i);
 void	check_dsign(t_data *data, t_token **token, int *i);
 bool	check_all(t_data *data, t_token **token, int *i);
+void	env_exist(t_data *data, t_token **token, int *i, int al_flag);
 /* lex- - d_sign.c */
 bool	pre_check(t_data *data, t_token **token);
 void	not_env(t_data *data, t_token **token, int *i, char *var);
 bool    possible_env(t_data *data, t_token **token, char *var);
 char    *possible_env_char(t_data *data, char *var);
 bool	check_heredoc(t_data *data, t_token **token, int *i);
+char	*make_var(t_data *data, int *i, char *var, int *idx);
 /* etc - env.c */
 t_list	*ft_lstnews();
 void	env_init(t_data *data, char **env);
