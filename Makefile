@@ -1,7 +1,8 @@
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -I ~/.brew/opt/readline/include
+LDFLAGS = -L ~/.brew/opt/readline/lib -lreadline -ltermcap
 RM = rm -f
 
 HEADER	=	includes/minishell.h
@@ -33,8 +34,8 @@ all : $(NAME)
 %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME):	$(M_OBJS) $(HEADER)	-lreadline -L ~/.brew/opt/readline/lib
-	$(CC) $(CFLAGS) -o $(NAME) -fsanitize=address
+$(NAME): $(M_OBJS) $(HEADER)
+	$(CC) $(CFLAGS) -o $(NAME) $(M_OBJS) $(LDFLAGS)
 
 clean:
 	$(RM) $(M_OBJS)

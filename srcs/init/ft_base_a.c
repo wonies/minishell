@@ -6,7 +6,7 @@
 /*   By: wonhshin <wonhshin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:43:28 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/07 23:46:12 by wonhshin         ###   ########.fr       */
+/*   Updated: 2023/08/08 13:51:22 by wonhshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,29 +43,31 @@ char	*ft_strncat(char *dest, char *src, int n)
 	return (res);
 }
 
-char	*ft_strtok(char *str, char *delim)
+char *ft_strtok(char *str,  char *delim)
 {
-	char	*buffer;
-	char	*deli;
+    static char *buffer = NULL;
+    if (str != NULL)
+        buffer = str;
 
-	if (!str)
-		return (NULL);
-	else
-		buffer = str;
-	while (*buffer)
-	{
-		deli = delim;
-		while (*deli)
-		{
-			if (*buffer == *deli)
-			{
-				// *buffer = NULL;
-				++deli;
-				return (str);
-			}
-			++deli;
-		}
-		++buffer;
-	}
-	return (str);
+    if (buffer == NULL || *buffer == '\0')
+        return NULL;
+
+    char *token_start = buffer;
+    char *token_end = strpbrk(buffer, delim);
+
+    if (token_end != NULL)
+    {
+        *token_end = '\0';
+        buffer = token_end + 1;
+    }
+    else
+    {
+        buffer += strlen(buffer);
+    }
+
+    return token_start;
 }
+
+
+
+
