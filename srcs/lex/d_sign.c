@@ -70,10 +70,12 @@ char    *possible_env_char(t_data *data, char *var)
     char    *temp;
 
     temp = find_envp(data, var);
+	printf("temp : %s\n", temp);
     if (temp != NULL)
     {
         char *value = ft_strtok(temp, "=");
         value = ft_strtok(NULL, "=");
+		printf("value is : %s\n", value);
         return (value);
     }
     return NULL;
