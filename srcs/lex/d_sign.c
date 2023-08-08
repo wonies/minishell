@@ -49,17 +49,14 @@ bool    possible_env(t_data *data, t_token **token, char *var)
     char *temp;
 
     temp = find_envp(data, var);
-	printf("----env1-----\n");
-	printf("temp: %s\n", temp);
     if (temp != NULL)
     {
         if (!(*(*token)->str))
             (*token) = new_token();
         char *value = ft_strtok(temp, "=");
-		printf("-----env2----\n");
         value = ft_strtok(NULL, "=");
-		printf("value : %s\n", value);
         (*token)->str = ft_strncat((*token)->str, value, ft_strlen(value));
+		token_to_list(&data->tokens, token, 1);
         return 0;
     }
     return 1;

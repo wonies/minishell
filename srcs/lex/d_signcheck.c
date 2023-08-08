@@ -66,27 +66,23 @@ void	check_dsign(t_data *data, t_token **token, int *i)
 	char	*var;
 
 	++(*i);
-	printf("-----1----\n");
 	var = ft_strdup("");
 	if (!var)
 		return ;
-	printf("-----2----\n");
 	if (check_all(data, token, i))
 		return ;
 	while (data->input[*i] != '\0' && data->input[*i] != ' ' && data->input[*i] != '\t' \
 	&& data->input[*i] != '\'' && data->input[*i] != '\"')
 	{
-        if (ft_isalnum(data->input[*i]) == 0)
+		if (ft_isalnum(data->input[*i]) == 0)
         {
             --(*i);
             break ;
         }
 		var = ft_strncat(var, &data->input[(*i)++], 1);
 	}
-	printf("-----3----\n");
 	if (possible_env(data, token, var))
 		not_env(data, token, i, var);
-	printf("-----4----\n");
 }
 
 bool	check_all(t_data *data, t_token **token, int *i)

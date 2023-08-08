@@ -17,6 +17,7 @@ void	lexer(t_data *data)
 
 void	input_token(t_data *data, t_token **token, int *i)
 {
+	printf("check token : %c\n", data->input[*i]);
 	if (data->input[*i] == ';')
 		++(*i);
 	if (data->input[*i] == '<' || data->input[*i] == '>' || data->input[*i] == '|')

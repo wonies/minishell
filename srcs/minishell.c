@@ -13,9 +13,6 @@ int main(int ac, char **av, char **env)
     env_init(data, env);
     get_envp(data);
     lexer(data);
-
-
-
     syntax(data);
     init_leaf(data);
     print_tree_recursive(data->root, 0);
