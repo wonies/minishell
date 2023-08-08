@@ -6,19 +6,24 @@
 /*   By: wonhshin <wonhshin@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 23:06:43 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/08 23:06:57 by wonhshin         ###   ########.fr       */
+/*   Updated: 2023/08/08 23:08:56 by wonhshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void leaks()
+{
+	system("leaks minishell");
+}
 
 int main(int ac, char **av, char **env)
 {
     (void)ac;
     (void)av;
 
+    atexit(leaks);
     t_data *data = NULL;
-
     data = new_data();
     data->input = readline("bash-3.2.1$ ");
     add_history(data->input);
