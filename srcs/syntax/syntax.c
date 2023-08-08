@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   syntax.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wonhshin <wonhshin@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/08 22:53:54 by wonhshin          #+#    #+#             */
+/*   Updated: 2023/08/08 22:54:38 by wonhshin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 void	syntax(t_data *data)
@@ -30,11 +42,13 @@ void	syntax_cmd(t_list	*cur)
 		syntax_err(E_SYNTAX_PIPE);
 }
 
-void syntax_arg(t_list *cur)
+void	syntax_arg(t_list *cur)
 {
-	if (cur->pre && cur->pre->pre && cur->pre->pre->token->type == T_REDIRECT && (cur->pre->token->type == T_ARG))
+	if (cur->pre && cur->pre->pre && cur->pre->pre->token->type == T_REDIRECT \
+	&& (cur->pre->token->type == T_ARG))
 		cur->token->type = T_CMD;
-	else if (cur->pre && (cur->pre->token->type == T_CMD || cur->pre->token->type == T_ARG || cur->pre->token->type == T_REDIRECT))
+	else if (cur->pre && (cur->pre->token->type == T_CMD \
+	|| cur->pre->token->type == T_ARG || cur->pre->token->type == T_REDIRECT))
 		cur->token->type = T_ARG;
 	else if (cur->pre && cur->pre->token->type == T_PIPE)
 		cur->token->type = T_CMD;

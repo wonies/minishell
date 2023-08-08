@@ -6,7 +6,7 @@
 /*   By: wonhshin <wonhshin@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:43:28 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/08 22:20:39 by wonhshin         ###   ########.fr       */
+/*   Updated: 2023/08/08 22:35:48 by wonhshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,43 +43,43 @@ char	*ft_strncat(char *dest, char *src, int n)
 	return (res);
 }
 
-char *ft_find_delim(char *str, char *delim)
+char	*ft_find_delim(char *str, char *delim)
 {
-    char	*deli;
-	
+	char	*deli;
+
 	deli = NULL;
 	while (*str)
-    {
-        deli = delim;
-        while (*deli)
-        {
-            if (*str == *deli)
-                return (str);
-            ++deli;
-        }
-        ++str;
-    }
-    return (NULL);
+	{
+		deli = delim;
+		while (*deli)
+		{
+			if (*str == *deli)
+				return (str);
+			++deli;
+		}
+		++str;
+	}
+	return (NULL);
 }
 
-char *ft_strtok(char *str, char *delim)
+char	*ft_strtok(char *str, char *delim)
 {
-    static char *buffer;
-	char	*token_start;
-	char	*token_end;
+	static char	*buffer;
+	char		*token_start;
+	char		*token_end;
 
-    if (str != NULL)
-        buffer = str;
-    if (buffer == NULL || *buffer == '\0')
-        return (NULL);
-    token_start = buffer;
-    token_end = ft_find_delim(buffer, delim);
-    if (token_end != NULL)
-    {
-        *token_end = '\0';
-        buffer = token_end + 1;
-    }
-    else
-        buffer += strlen(buffer);
-    return (token_start);
+	if (str != NULL)
+		buffer = str;
+	if (buffer == NULL || *buffer == '\0')
+		return (NULL);
+	token_start = buffer;
+	token_end = ft_find_delim(buffer, delim);
+	if (token_end != NULL)
+	{
+		*token_end = '\0';
+		buffer = token_end + 1;
+	}
+	else
+		buffer += ft_strlen(buffer);
+	return (token_start);
 }

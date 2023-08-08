@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wonhshin <wonhshin@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/08 22:39:27 by wonhshin          #+#    #+#             */
+/*   Updated: 2023/08/08 22:46:12 by wonhshin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 void	lexer(t_data *data)
@@ -19,7 +31,8 @@ void	input_token(t_data *data, t_token **token, int *i)
 {
 	if (data->input[*i] == ';')
 		++(*i);
-	if (data->input[*i] == '<' || data->input[*i] == '>' || data->input[*i] == '|')
+	if (data->input[*i] == '<' || data->input[*i] == '>' \
+	|| data->input[*i] == '|')
 	{
 		if (*(*token)->str)
 			token_to_list(&data->tokens, token, 1);
@@ -37,4 +50,3 @@ void	input_token(t_data *data, t_token **token, int *i)
 	else
 		(*token)->str = ft_strncat((*token)->str, &data->input[*i], 1);
 }
-

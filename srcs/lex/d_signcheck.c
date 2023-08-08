@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   d_signcheck.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wonhshin <wonhshin@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/08 22:39:18 by wonhshin          #+#    #+#             */
+/*   Updated: 2023/08/08 22:43:04 by wonhshin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 bool	check_space(t_data *data, t_token **token, int *i)
@@ -25,27 +37,13 @@ bool	check_space(t_data *data, t_token **token, int *i)
 	return (0);
 }
 
-bool	two_space(t_data *data, t_token **token, int *i, int check)
+bool	check_heredoc(t_data *data, t_token **token, int *i)
 {
-	(*token) = new_token();
-	(*token)->str = ft_strncat((*token)->str, "$", 1);
-	if (check > 0 && data->input[*i] != '\0')
-		(*token)->str = ft_strncat((*token)->str, " ", 1);
-	while (data->input[*i] || data->input[*i] == '|')
+	if (data->tokens && data->tokens->token->re_type == T_HEREDOC)
 	{
-		if (data->input[*i] == '\"' || data->input[*i] == '\'')
-		{
-			if (data->input[*i] == '\"')
-				double_quotes(data, token, i, 1);
-			else
-				single_quotes(data, token, i, 1);
-			return (1);
-		}
-		else
-		{
-			check = 0;
-			(*token)->str = ft_strncat((*token)->str, &data->input[(*i)++], 1);
-		}
+		(*token)->str = ft_strncat((*token)->str, "$", 1);
+		--(*i);
+		return (1);
 	}
 	return (0);
 }
@@ -53,18 +51,17 @@ bool	two_space(t_data *data, t_token **token, int *i, int check)
 bool	check_quote(t_data *data, int *i)
 {
 	if (data->input[*i] == '\"' || data->input[*i] == '\'')
-    {
-        --(*i);
-        return (1);
-    }
+	{
+		--(*i);
+		return (1);
+	}
 	return (0);
 }
-
 
 void	check_dsign(t_data *data, t_token **token, int *i)
 {
 	char	*var;
-	int al_flag;
+	int		al_flag;
 
 	++(*i);
 	var = ft_strdup("");

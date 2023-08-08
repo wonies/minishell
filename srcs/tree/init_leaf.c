@@ -1,8 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_leaf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wonhshin <wonhshin@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/08 23:05:44 by wonhshin          #+#    #+#             */
+/*   Updated: 2023/08/08 23:06:19 by wonhshin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 t_leaf	*create_leaf(int leaf_type, t_leaf *parent)
 {
-	t_leaf	*new_leaf = (t_leaf *)ft_calloc(1, sizeof(t_leaf));
+	t_leaf	*new_leaf;
+
+	new_leaf = (t_leaf *)ft_calloc(1, sizeof(t_leaf));
 	if (!new_leaf)
 		return (NULL);
 	new_leaf->parent = parent;
@@ -14,8 +28,8 @@ t_leaf	*create_leaf(int leaf_type, t_leaf *parent)
 
 void	init_leaf(t_data *data)
 {
-	t_leaf *cur_leaf;
-	t_list *cur_token;
+	t_leaf	*cur_leaf;
+	t_list	*cur_token;
 
 	cur_token = data->tokens;
 	if (!cur_token)
