@@ -6,7 +6,7 @@
 /*   By: wonhshin <wonhshin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:43:34 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/07/19 21:45:07 by wonhshin         ###   ########.fr       */
+/*   Updated: 2023/08/09 00:18:01 by wonhshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,17 @@ int	ft_lstsize(t_list *lst)
 		lst = lst->next;
 	}
 	return (cnt);
+}
+
+void	ft_lstclear(t_list **lst)
+{
+	t_list	*temp;
+
+	while (*lst)
+	{
+		temp = (*lst)->next;
+		free(*lst);
+		*lst = temp;
+	}
+	(*lst) = 0;
 }
