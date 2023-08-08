@@ -3,11 +3,9 @@
 void	lexer(t_data *data)
 {
 	t_token	*token;
-	t_list	**list;
 	int		i;
 
 	i = -1;
-	list = NULL;
 	token = new_token();
 	if (!token)
 		err_msg("bash:");

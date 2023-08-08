@@ -9,7 +9,7 @@ void	even_quote(t_data *data, t_token **token, int *i, char quote)
 	{
 		if (data->input[*i] == '$' && quote == '\"')
 			quote_dsign(data, token, i);
-		if ((data->input[*i] == '\\' && data->input[(*i) + 1] == quote) || data->input[*i] == '\\' && data->input[(*i) + 1] == '\\')
+		if ((data->input[*i] == '\\' && data->input[(*i) + 1] == quote) || (data->input[*i] == '\\' && data->input[(*i) + 1] == '\\'))
 			(*i)++;
 		if (data->input[*i] != quote)
 			(*token)->str = ft_strncat((*token)->str, &data->input[(*i)++], 1);
@@ -29,7 +29,7 @@ void	odd_quote(t_data *data, t_token **token, int *i)
 	{
 		if (data->input[*i] == '$')
 			quote_dsign(data, token, i);
-		if ((data->input[*i] == '\\' && data->input[(*i) + 1] == '\"') || data->input[*i] == '\\' && data->input[(*i) + 1] == '\\')
+		if ((data->input[*i] == '\\' && data->input[(*i) + 1] == '\"') || (data->input[*i] == '\\' && data->input[(*i) + 1] == '\\'))
 				(*i)++;
 		(*token)->str = ft_strncat((*token)->str, &data->input[(*i)++], 1);
 	}

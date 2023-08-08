@@ -10,8 +10,8 @@ void tree_left_right(t_leaf *cur_leaf, t_list *cur_token)
     {
         if (cur_token->pre && cur_token->pre->token->type == T_REDIRECT)
             tree_add_left(cur_leaf, cur_token->token, T_ARG);
-        else if (cur_token->pre && cur_token->pre->token->type == T_CMD
-                 || cur_token->pre && cur_token->pre->token->type == T_ARG)
+        else if ((cur_token->pre && cur_token->pre->token->type == T_CMD)
+                 || (cur_token->pre && cur_token->pre->token->type == T_ARG))
             tree_add_right(cur_leaf, cur_token->token, T_ARG);
     }
 }

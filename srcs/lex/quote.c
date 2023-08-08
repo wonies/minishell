@@ -22,11 +22,9 @@ void    double_quotes(t_data *data, t_token **token, int *i, int ch)
 void    single_quotes(t_data *data, t_token **token, int *i, int ch)
 {
     int	end;
-	int	quote_flag;
 
 	++(*i);
 	end = find_closing_quote(*i, data->input, '\'');
-	quote_flag = 0;
 	if ((*(*token)->str) && ch == 0)
         token_to_list(&data->tokens, token, 1);
     if (end == 0)

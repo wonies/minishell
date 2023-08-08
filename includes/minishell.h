@@ -138,7 +138,9 @@ void	create_pipe(t_leaf **cur);
 void tree_left_right(t_leaf *cur_leaf, t_list *cur_token);
 t_bool tree_add_left(t_leaf *parent, t_token *new_token, int leaf_type);
 t_bool tree_add_right(t_leaf *parent, t_token *new_token, int leaf_type);
-
+/* err - err_msg */
+void	err_msg(char *msg);
+void	syntax_err(char *msg);
 
 /* tree_recursive - */
 void print_tree_recursive(t_leaf *node, int level);
