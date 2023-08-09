@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wonhshin <wonhshin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wonhshin <wonhshin@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 23:06:43 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/09 00:26:53 by wonhshin         ###   ########.fr       */
+/*   Updated: 2023/08/09 21:33:00 by wonhshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,13 @@ int main(int ac, char **av, char **env)
     add_history(data->input);
     env_init(data, env);
     get_envp(data);
-    // lexer(data);
-    // syntax(data);
-    // init_leaf(data);
-    // print_tree_recursive(data->root, 0);
-    free(data->input);
+    lexer(data);
+    syntax(data);
+    init_leaf(data);
+    print_tree_recursive(data->root, 0);
+    // free(data->input);
     ft_lstclear(&data->envs);
+    ft_lstclear(&data->tokens);
     free(data);
 	// t_list *cur = data->tokens;
     

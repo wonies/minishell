@@ -6,7 +6,7 @@
 /*   By: wonhshin <wonhshin@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 22:39:27 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/08 22:46:12 by wonhshin         ###   ########.fr       */
+/*   Updated: 2023/08/09 18:48:18 by wonhshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ void	lexer(t_data *data)
 
 void	input_token(t_data *data, t_token **token, int *i)
 {
-	if (data->input[*i] == ';')
-		++(*i);
 	if (data->input[*i] == '<' || data->input[*i] == '>' \
 	|| data->input[*i] == '|')
 	{

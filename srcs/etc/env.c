@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wonhshin <wonhshin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wonhshin <wonhshin@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 22:28:38 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/09 00:34:11 by wonhshin         ###   ########.fr       */
+/*   Updated: 2023/08/09 21:33:40 by wonhshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	env_init(t_data *data, char **env)
 		new_node = ft_lstnews();
 		new_node->env = ft_strdup(env[i]);
 		ft_lstadd_back(&data->envs, new_node);
-        free(new_node->env);
 	}
 }
 

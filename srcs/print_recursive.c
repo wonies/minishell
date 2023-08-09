@@ -14,9 +14,12 @@ void print_tree_recursive(t_leaf *node, int level)
     if (node->token)
     {
         if (node->token->type == T_CMD)
-            printf("CMD: %s\n", node->token->str);
+            printf("CMD: {%s}\n", node->token->str);
         else if (node->token->type == T_ARG)
-            printf("ARG: %s\n", node->token->str);
+        {
+            if (node->token->str != (void *)0)
+                printf("ARG: {%s}\n", node->token->str);
+        }
         else if (node->token->type == T_REDIRECT)
         {
             printf("REDIRECT");

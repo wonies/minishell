@@ -6,7 +6,7 @@
 /*   By: wonhshin <wonhshin@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 22:39:18 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/08 22:43:04 by wonhshin         ###   ########.fr       */
+/*   Updated: 2023/08/09 19:57:31 by wonhshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,25 @@ bool	check_heredoc(t_data *data, t_token **token, int *i)
 
 bool	check_quote(t_data *data, int *i)
 {
+	// int		quote_close;
+	char	quote;
+
+	if (data->input[*i] == '\"')
+		quote = '\"';
+	else if (data->input[*i] == '\'')
+		quote = '\'';
+	else
+		return 0;
 	if (data->input[*i] == '\"' || data->input[*i] == '\'')
 	{
+		// printf("-------check this-------");
+		// quote_close = find_closing_quote(++(*i), data->input, quote);
+		// if (quote_close == 0)
+		// {
+		// 	--(*i);
+		// 	return (0);
+		// }
+		--(*i);
 		--(*i);
 		return (1);
 	}

@@ -6,7 +6,7 @@
 /*   By: wonhshin <wonhshin@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 22:36:46 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/08 22:41:50 by wonhshin         ###   ########.fr       */
+/*   Updated: 2023/08/09 21:31:37 by wonhshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ char	*possible_env_char(t_data *data, char *var)
 	char	*value;
 
 	temp = find_envp(data, var);
+	printf("find_envp : %s\n", temp);
 	if (temp != NULL)
 	{
 		value = ft_strtok(temp, "=");
@@ -96,7 +97,7 @@ bool	two_space(t_data *data, t_token **token, int *i, int check)
 	(*token)->str = ft_strncat((*token)->str, "$", 1);
 	if (check > 0 && data->input[*i] != '\0')
 		(*token)->str = ft_strncat((*token)->str, " ", 1);
-	while (data->input[*i] || data->input[*i] == '|')
+	while (data->input[*i] != '\0' && data->input[*i] != '|')
 	{
 		if (data->input[*i] == '\"' || data->input[*i] == '\'')
 		{
