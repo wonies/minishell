@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   d_sign.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wonhshin <wonhshin@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: wonhshin <wonhshin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 22:36:46 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/09 21:31:37 by wonhshin         ###   ########.fr       */
+/*   Updated: 2023/08/10 23:25:22 by wonhshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,13 @@ void	not_env(t_data *data, t_token **token, int *i, char *var)
 	if (data->input[*i] != ' ' || data->input[*i] != '\t')
 	{
 		(*token)->str = ft_strncat((*token)->str, "$", 1);
+		printf("----here---\n");
+		printf("variable len : %d\n", var_len);
+		if (var_len == 0)
+		{
+			free(var);
+			return ;
+		}
 		(*i) -= (var_len + 1);
 		return ;
 	}
@@ -62,6 +69,7 @@ bool	possible_env(t_data *data, t_token **token, char *var)
 	char	*value;
 
 	temp = find_envp(data, var);
+	printf("temp : %s\n", temp);
 	if (temp != NULL)
 	{
 		if (!(*(*token)->str))
@@ -86,6 +94,7 @@ char	*possible_env_char(t_data *data, char *var)
 		value = ft_strtok(temp, "=");
 		value = ft_strtok(NULL, "=");
 		printf("value is: %s\n", value);
+		free(var);
 		return (value);
 	}
 	return (NULL);

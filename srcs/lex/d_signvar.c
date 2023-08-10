@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   d_signvar.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wonhshin <wonhshin@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: wonhshin <wonhshin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 22:39:24 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/08 22:45:35 by wonhshin         ###   ########.fr       */
+/*   Updated: 2023/08/10 22:10:43 by wonhshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ char	*make_var(t_data *data, int *i, char *var, int *idx)
 	&& data->input[*i] != '\t' && data->input[*i] != '\'' \
 	&& data->input[*i] != '\"')
 	{
+		if (data->input[*i] == '$' || data->input[*i] == '?')
+		{
+			var = ft_strncat(var, &data->input[(*i)++], 1);
+			return (var);
+		}
 		if (ft_isalnum(data->input[*i]) == 0)
 		{
 			--(*i);

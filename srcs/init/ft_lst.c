@@ -6,7 +6,7 @@
 /*   By: wonhshin <wonhshin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:43:34 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/09 00:18:01 by wonhshin         ###   ########.fr       */
+/*   Updated: 2023/08/10 22:54:21 by wonhshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,21 @@ int	ft_lstsize(t_list *lst)
 	return (cnt);
 }
 
+void	ft_lstdel(t_list *lst)
+{
+	if (!lst)
+		return ;
+	if (lst->token)
+	{
+		if (lst->token->str)
+			free(lst->token->str);
+		free(lst->token);
+	}
+	if (lst->env)
+		free(lst->env);
+	free(lst);
+}
+
 void	ft_lstclear(t_list **lst)
 {
 	t_list	*temp;
@@ -57,8 +72,36 @@ void	ft_lstclear(t_list **lst)
 	while (*lst)
 	{
 		temp = (*lst)->next;
-		free(*lst);
+		ft_lstdel(*lst);
 		*lst = temp;
 	}
 	(*lst) = 0;
 }
+
+// void	ft_lstdelone(t_list *lst)
+// {
+// 	if (!lst)
+// 		return ;
+// 	if (lst->token)
+// 	{
+// 		if (lst->token->str)
+// 			free(lst->token->str);
+// 		free(lst->token);
+// 	}
+// 	if (lst->env)
+// 		free(lst->env);
+// 	free(lst);
+// }
+
+// void	ft_lstclear(t_list **lst)
+// {
+// 	t_list	*temp;
+
+// 	while (*lst)
+// 	{
+// 		temp = (*lst)->next;
+// 		free(*lst);
+// 		*lst = temp;
+// 	}
+// 	(*lst) = 0;
+// }
