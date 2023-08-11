@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wonhshin <wonhshin@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: wonhshin <wonhshin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 22:39:27 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/09 18:48:18 by wonhshin         ###   ########.fr       */
+/*   Updated: 2023/08/11 00:57:28 by wonhshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,5 @@ void	input_token(t_data *data, t_token **token, int *i)
 		check_dsign(data, token, i);
 	else
 		(*token)->str = ft_strncat((*token)->str, &data->input[*i], 1);
+	printf("%p\n", (*token)->str);
 }

@@ -6,7 +6,7 @@
 /*   By: wonhshin <wonhshin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 23:06:43 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/10 23:24:07 by wonhshin         ###   ########.fr       */
+/*   Updated: 2023/08/10 23:52:23 by wonhshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ int main(int ac, char **av, char **env)
 {
     (void)ac;
     (void)av;
-
-    (void)env;
+    
     t_data *data = NULL;
     data = new_data();
     data->input = readline("bash-3.2.1$ ");
@@ -31,18 +30,17 @@ int main(int ac, char **av, char **env)
     // get_envp(data);
     atexit(leaks);
     printf("pointer : %p\n", data->input);
-    
+
     lexer(data);
     syntax(data);
     init_leaf(data);
     print_tree_recursive(data->root, 0);
     free(data->input);
-
     ft_lstclear(&data->envs);
     // ft_lstclear(&data->tokens);
     free(data);
 	// t_list *cur = data->tokens;
-    
+
 	// while (cur)
     // {
     //     // printf("env : %s\n", cur->env);
