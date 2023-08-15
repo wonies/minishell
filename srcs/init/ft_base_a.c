@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_base_a.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wonhshin <wonhshin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wonhshin <wonhshin@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:43:28 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/09 00:13:44 by wonhshin         ###   ########.fr       */
+/*   Updated: 2023/08/14 18:01:10 by wonhshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ size_t	ft_strlen(const	char *str)
 	size_t	i;
 
 	i = 0;
+	if (!str)
+		return (0);
 	while (*str)
 	{
 		str++;
@@ -30,16 +32,26 @@ char	*ft_strncat(char *dest, char *src, int n)
 	int		size;
 	char	*res;
 	int		i;
+	int		j;
 
 	size = ft_strlen(dest) + n;
 	res = (char *)ft_calloc(size + 1, sizeof(char));
+	if (!res)
+		return (NULL);
 	i = 0;
 	if (dest)
-		while (*dest)
-			res[i++] = *dest++;
-	if (src)
-		while (n--)
-			res[i++] = *src++;
+	{
+		while (dest[i])
+		{
+			res[i] = dest[i];
+			i++;
+		}
+		free(dest);
+	}
+	j = 0;
+	while (src[j] && j < n)
+		res[i++] = src[j++];
+	res[i] = '\0';
 	return (res);
 }
 
@@ -70,6 +82,7 @@ char	*ft_strtok(char *str, char *delim)
 
 	if (str != NULL)
 		buffer = str;
+	printf ("before_buf: %s\n", buffer);
 	if (buffer == NULL || *buffer == '\0')
 		return (NULL);
 	token_start = buffer;
@@ -78,6 +91,7 @@ char	*ft_strtok(char *str, char *delim)
 	{
 		*token_end = '\0';
 		buffer = token_end + 1;
+		printf ("after_buf: %s\n", buffer);
 	}
 	else
 		buffer += ft_strlen(buffer);

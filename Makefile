@@ -1,7 +1,7 @@
 NAME = minishell
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -I ~/.brew/opt/readline/include
+CC = cc -g3
+CFLAGS = -I ~/.brew/opt/readline/include # -Wall -Wextra -Werror
 LDFLAGS = -L ~/.brew/opt/readline/lib -lreadline -ltermcap
 RM = rm -f
 
@@ -14,9 +14,13 @@ SRCS =	srcs/minishell.c \
 	srcs/init/ft_base_token.c \
 	srcs/init/ft_base.c \
 	srcs/init/ft_lst.c \
-	srcs/lex/d_sign.c \
+	srcs/init/lstclear.c \
+	srcs/lex/d_signpre.c \
+	srcs/lex/quote_dsign.c \
 	srcs/lex/d_signcheck.c \
 	srcs/lex/d_signvar.c \
+	srcs/lex/d_sign.c \
+	srcs/lex/possible_env.c \
 	srcs/lex/lexer.c \
 	srcs/lex/quote_evenodd.c \
 	srcs/lex/quote.c \
@@ -40,12 +44,12 @@ $(NAME): $(M_OBJS) $(HEADER)
 clean:
 	$(RM) $(M_OBJS)
 
-fclean: 
+fclean:
 	make clean
 	$(RM) $(NAME)
 
-re: 
-	make fclean 
+re:
+	make fclean
 	make all
-	
+
 .PHONY: all clean fclean re

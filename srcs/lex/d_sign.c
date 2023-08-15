@@ -3,124 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   d_sign.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wonhshin <wonhshin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wonhshin <wonhshin@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/08 22:36:46 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/10 23:25:22 by wonhshin         ###   ########.fr       */
+/*   Created: 2023/08/15 15:43:46 by wonhshin          #+#    #+#             */
+/*   Updated: 2023/08/15 15:43:47 by wonhshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-bool	pre_check(t_data *data, t_token **token)
+void	check_dsign(t_data *data, t_token **token, int *i)
 {
-	t_token	*prev;
+	char	*var;
+	int		al_flag;
 
-	prev = NULL;
-	if (!(data->tokens))
+	++(*i);
+	var = ft_strdup("");
+	al_flag = 0;
+	if (!var)
+		return ;
+	if (check_all(data, token, i))
 	{
-		(*token) = new_token();
-		(*token)->str = ft_strncat((*token)->str, "$", 1);
-		token_to_list(&data->tokens, token, 1);
-		return (1);
-	}
-	if (data->tokens)
-	{
-		prev = ft_lstlast(data->tokens)->token;
-		if (prev && prev->type == T_PIPE)
-		{
-			(*token) = new_token();
-			(*token)->str = ft_strncat((*token)->str, "$", 1);
-			token_to_list(&data->tokens, token, 1);
-			return (1);
-		}
-	}
-	return (0);
-}
-
-void	not_env(t_data *data, t_token **token, int *i, char *var)
-{
-	int	var_len;
-
-	var_len = ft_strlen(var);
-	if (!(*(*token)->str))
-		(*token) = new_token();
-	if (data->input[*i] != ' ' || data->input[*i] != '\t')
-	{
-		(*token)->str = ft_strncat((*token)->str, "$", 1);
-		printf("----here---\n");
-		printf("variable len : %d\n", var_len);
-		if (var_len == 0)
-		{
-			free(var);
-			return ;
-		}
-		(*i) -= (var_len + 1);
+		free(var);
 		return ;
 	}
-	(*token)->str = ft_strncat((*token)->str, "$ ", 2);
-	(*token)->str = ft_strncat((*token)->str, var, var_len);
-	(*i) -= (var_len + 1);
-}
-
-bool	possible_env(t_data *data, t_token **token, char *var)
-{
-	char	*temp;
-	char	*value;
-
-	temp = find_envp(data, var);
-	printf("temp : %s\n", temp);
-	if (temp != NULL)
-	{
-		if (!(*(*token)->str))
-			(*token) = new_token();
-		value = ft_strtok(temp, "=");
-		value = ft_strtok(NULL, "=");
-		(*token)->str = ft_strncat((*token)->str, value, ft_strlen(value));
-		return (0);
-	}
-	return (1);
-}
-
-char	*possible_env_char(t_data *data, char *var)
-{
-	char	*temp;
-	char	*value;
-
-	temp = find_envp(data, var);
-	printf("find_envp : %s\n", temp);
-	if (temp != NULL)
-	{
-		value = ft_strtok(temp, "=");
-		value = ft_strtok(NULL, "=");
-		printf("value is: %s\n", value);
-		free(var);
-		return (value);
-	}
-	return (NULL);
-}
-
-bool	two_space(t_data *data, t_token **token, int *i, int check)
-{
-	(*token) = new_token();
-	(*token)->str = ft_strncat((*token)->str, "$", 1);
-	if (check > 0 && data->input[*i] != '\0')
-		(*token)->str = ft_strncat((*token)->str, " ", 1);
-	while (data->input[*i] != '\0' && data->input[*i] != '|')
-	{
-		if (data->input[*i] == '\"' || data->input[*i] == '\'')
-		{
-			if (data->input[*i] == '\"')
-				double_quotes(data, token, i, 1);
-			else
-				single_quotes(data, token, i, 1);
-			return (1);
-		}
-		else
-		{
-			check = 0;
-			(*token)->str = ft_strncat((*token)->str, &data->input[(*i)++], 1);
-		}
-	}
-	return (0);
+	var = make_var(data, i, var, &al_flag);
+	--(*i);
+	if (possible_env(data, token, var))
+		not_env(data, token, i, var);
+	else
+		env_exist(data, token, i, al_flag);
+	free(var);
 }

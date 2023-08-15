@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   d_signcheck.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wonhshin <wonhshin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wonhshin <wonhshin@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 22:39:18 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/10 23:21:20 by wonhshin         ###   ########.fr       */
+/*   Updated: 2023/08/15 15:43:38 by wonhshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ bool	check_heredoc(t_data *data, t_token **token, int *i)
 	if (data->tokens && data->tokens->token->re_type == T_HEREDOC)
 	{
 		(*token)->str = ft_strncat((*token)->str, "$", 1);
+		while (data->input[*i] && data->input[*i] != ' ' && \
+		data->input[*i] != '|')
+			(*token)->str = ft_strncat((*token)->str, &data->input[(*i)++], 1);
 		--(*i);
 		return (1);
 	}
@@ -61,7 +64,6 @@ bool	check_quote(t_data *data, int *i)
 		quote = '\0';
 	if (data->input[*i] == '\"' || data->input[*i] == '\'')
 	{
-		// printf("-------check this-------");
 		quote_close = find_closing_quote(++(*i), data->input, quote);
 		if (quote_close == 0)
 		{
@@ -75,29 +77,18 @@ bool	check_quote(t_data *data, int *i)
 	return (0);
 }
 
-void	check_dsign(t_data *data, t_token **token, int *i)
+bool	check_ques(t_data *data, t_token **token, int *i)
 {
-	char	*var;
-	int		al_flag;
+	char	*itoa;	
 
-	++(*i);
-	printf("----%c----\n", data->input[*i]);
-	var = ft_strdup("");
-	al_flag = 0;
-	if (!var)
-		return ;
-	if (check_all(data, token, i))
+	if (data->input[*i] == '?')
 	{
-		free(var);
-		return ;
+		itoa = ft_itoa(data->err_code);
+		(*token)->str = ft_strncat((*token)->str, itoa, ft_strlen(itoa));
+		free(itoa);
+		return (1);
 	}
-	var = make_var(data, i, var, &al_flag);
-	printf("\n\n-----check env var------  %s\n", var);
-	if (possible_env(data, token, var))
-		not_env(data, token, i, var);
-	else
-		env_exist(data, token, i, al_flag);
-	free(var);
+	return (0);
 }
 
 bool	check_all(t_data *data, t_token **token, int *i)
@@ -107,6 +98,8 @@ bool	check_all(t_data *data, t_token **token, int *i)
 	if (check_quote(data, i))
 		return (1);
 	if (check_space(data, token, i))
+		return (1);
+	if (check_ques(data, token, i))
 		return (1);
 	return (0);
 }

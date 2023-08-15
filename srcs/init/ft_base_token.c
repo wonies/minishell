@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_base_token.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wonhshin <wonhshin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wonhshin <wonhshin@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:52:18 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/07/19 21:52:18 by wonhshin         ###   ########.fr       */
+/*   Updated: 2023/08/12 22:27:59 by wonhshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,12 @@ t_token	*new_token(void)
 	if (!token)
 		return (NULL);
 	token->str = ft_strdup("");
+	if (!token->str)
+		err_msg("not allocated!\n");
 	token->type = T_WORD;
+	token->sq_print = 0;
+	token->dq_print = 0;
+	token->space = 0;
 	return (token);
 }
 

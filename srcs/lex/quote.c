@@ -6,7 +6,7 @@
 /*   By: wonhshin <wonhshin@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 22:39:32 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/09 18:50:11 by wonhshin         ###   ########.fr       */
+/*   Updated: 2023/08/15 15:42:01 by wonhshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ void	double_quotes(t_data *data, t_token **token, int *i, int ch)
 	++(*i);
 	end = find_closing_quote(*i, data->input, '\"');
 	(void)ch;
-	// if ((*(*token)->str) && ch == 0)
-	// 	token_to_list(&data->tokens, token, 1); ->이걸분명히..이유가있었는데 기억이안난다.
 	if (end == 0)
 	{
 		(*token)->str = ft_strncat((*token)->str, &data->input[--(*i)], 1);
@@ -39,8 +37,6 @@ void	single_quotes(t_data *data, t_token **token, int *i, int ch)
 	++(*i);
 	end = find_closing_quote(*i, data->input, '\'');
 	(void)ch;
-	// if ((*(*token)->str) && ch == 0)
-	// 	token_to_list(&data->tokens, token, 1);
 	if (end == 0)
 	{
 		(*token)->str = ft_strncat((*token)->str, &data->input[--(*i)], 1);
@@ -53,31 +49,6 @@ void	single_quotes(t_data *data, t_token **token, int *i, int ch)
 		while (data->input[*i] != '\'')
 			(*token)->str = ft_strncat((*token)->str, &data->input[(*i)++], 1);
 	}
-}
-
-void	quote_dsign(t_data *data, t_token **token, int *i)
-{
-	char	*temp;
-	char	*envs;
-
-	++(*i);
-	envs = NULL;
-	temp = ft_strdup("");
-	printf("\n---quote_dsign---\n");
-	while (data->input[*i] != ' ' && data->input[*i] != '\t' \
-	&& data->input[*i] != '\"')
-	{
-		if (ft_isalnum(data->input[*i]) == 0)
-			break ;
-		temp = ft_strncat(temp, &data->input[(*i)++], 1);
-		printf("CHECK temp: %s\n", temp);
-	}
-	envs = possible_env_char(data, temp);
-	printf("envs: %s\n", envs);
-	if (envs)
-		(*token)->str = ft_strncat((*token)->str, envs, ft_strlen(envs));
-	else
-		(*i) -= ft_strlen(temp) + 1;
 }
 
 int	find_closing_quote(int i, char *line, char quote)
