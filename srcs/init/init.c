@@ -6,7 +6,7 @@
 /*   By: wonhshin <wonhshin@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 21:34:08 by donghong          #+#    #+#             */
-/*   Updated: 2023/08/17 14:44:44 by wonhshin         ###   ########.fr       */
+/*   Updated: 2023/08/17 21:39:02 by wonhshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_bool	get_input(t_data *data)
 	if (!data->input)
 	{
 		printf("exit\n");
-		exit(1);
+		exit(0);
 	}
 	if (check_blank_input(data->input) == TRUE)
 	{
