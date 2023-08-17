@@ -28,7 +28,9 @@ void	check_dsign(t_data *data, t_token **token, int *i)
 		return ;
 	}
 	var = make_var(data, i, var, &al_flag);
-	--(*i);
+	if (data->input[*i] == '\"' || data->input[*i] == '\'' || \
+	data->input[*i] == ' ' || data->input[*i] == '\t')
+			(*i)--;
 	if (possible_env(data, token, var))
 		not_env(data, token, i, var);
 	else

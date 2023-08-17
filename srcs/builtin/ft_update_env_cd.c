@@ -1,41 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   err_msg.c                                          :+:      :+:    :+:   */
+/*   ft_update_env_cd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: donghong <donghong@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/08 22:28:11 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/17 18:34:11 by donghong         ###   ########.fr       */
+/*   Created: 2023/08/17 15:03:08 by donghong          #+#    #+#             */
+/*   Updated: 2023/08/17 15:03:10 by donghong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	err_msg(char *msg)
-{
-	perror(msg);
-	exit(errno);
-}
+void	ft_update_env_cd(t_data *data, char *key, char *value);
 
-void	syntax_err(char *msg)
+void	ft_update_env_cd(t_data *data, char *key, char *value)
 {
-	printf("%s\n", msg);
-	exit(2);
-}
+	t_list	*tmp;
 
-void	print_exit(void)
-{
-	printf("exit\n");
-	exit(1);
-}
-
-t_bool	error_code_read(char *str, int code, int flag)
-{
-	if (flag)
-		perror(str);
+	if (!key || !value)
+		err_msg("bash");
+	tmp = env_search(data, key, TRUE);
+	if (!tmp)
+		ft_add_env_front(data, key, value);
 	else
-		printf("%s\n", str);
-	g_exit_status = code;
-	return (0);
+	{
+		free(tmp->env);
+		tmp->env = ft_strdup(key);
+		tmp->env = ft_strncat(tmp->env, "=", 1);
+		tmp->env = ft_strncat(tmp->env, value, ft_strlen(value));
+		free(key);
+		free(value);
+	}
 }

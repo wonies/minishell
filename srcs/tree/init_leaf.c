@@ -6,7 +6,7 @@
 /*   By: wonhshin <wonhshin@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 23:05:44 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/12 01:27:14 by wonhshin         ###   ########.fr       */
+/*   Updated: 2023/08/15 23:22:08 by wonhshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,17 @@ t_leaf	*create_leaf(int leaf_type, t_leaf *parent)
 	return (new_leaf);
 }
 
+void	create_pipe(t_leaf **cur)
+{
+	*cur = (*cur)->parent;
+	(*cur)->exist = 1;
+	(*cur)->leaf_type = T_PIPE;
+	(*cur)->right_child = create_leaf(T_PIPE, *cur);
+	*cur = (*cur)->right_child;
+	(*cur)->left_child = create_leaf(T_CMD, *cur);
+	*cur = (*cur)->left_child;
+}
+
 void	init_leaf(t_data *data)
 {
 	t_leaf	*cur_leaf;
@@ -41,7 +52,7 @@ void	init_leaf(t_data *data)
 	{
 		while (cur_token && cur_token->token->type != T_PIPE)
 		{
-			tree_left_right(cur_leaf, cur_token);
+			child_tree(cur_leaf, cur_token);
 			cur_token = cur_token->next;
 		}
 		if (!cur_token)
@@ -50,15 +61,4 @@ void	init_leaf(t_data *data)
 			create_pipe(&cur_leaf);
 		cur_token = cur_token->next;
 	}	
-}
-
-void	create_pipe(t_leaf **cur)
-{
-	*cur = (*cur)->parent;
-	(*cur)->exist = 1;
-	(*cur)->leaf_type = T_PIPE;
-	(*cur)->right_child = create_leaf(T_PIPE, *cur);
-	*cur = (*cur)->right_child;
-	(*cur)->left_child = create_leaf(T_CMD, *cur);
-	*cur = (*cur)->left_child;
 }

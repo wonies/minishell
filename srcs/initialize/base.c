@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_base.c                                          :+:      :+:    :+:   */
+/*   base.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wonhshin <wonhshin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wonhshin <wonhshin@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 21:43:40 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/07/19 21:43:43 by wonhshin         ###   ########.fr       */
+/*   Updated: 2023/08/17 12:35:31 by wonhshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	*ft_strdup(const char *s1)
 
 	len = ft_strlen(s1);
 	str = malloc((len + 1) * sizeof(char));
+	if (!str)
+		err_msg("bash");
 	temp = str;
 	if (!temp)
 		return (NULL);
@@ -66,7 +68,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		size = len;
 	string = (char *)malloc(sizeof(char) * (size + 1));
 	if (!string || !s)
-		return (NULL);
+		err_msg("bash");
 	if (size)
 		while (i < len && s[start])
 			string[i++] = s[start++];
@@ -80,7 +82,7 @@ void	*ft_calloc(size_t count, size_t size)
 
 	temp = malloc(count * size);
 	if (!temp)
-		return (NULL);
+		err_msg("bash");
 	ft_memset(temp, 0, count * size);
 	return (temp);
 }

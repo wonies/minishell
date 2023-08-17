@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   d_signcheck.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wonhshin <wonhshin@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: donghong <donghong@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 22:39:18 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/15 15:43:38 by wonhshin         ###   ########.fr       */
+/*   Updated: 2023/08/17 18:29:40 by donghong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-bool	check_space(t_data *data, t_token **token, int *i)
+t_bool	check_space(t_data *data, t_token **token, int *i)
 {
 	int	check;
 
@@ -37,7 +37,7 @@ bool	check_space(t_data *data, t_token **token, int *i)
 	return (0);
 }
 
-bool	check_heredoc(t_data *data, t_token **token, int *i)
+t_bool	check_heredoc(t_data *data, t_token **token, int *i)
 {
 	if (data->tokens && data->tokens->token->re_type == T_HEREDOC)
 	{
@@ -51,7 +51,7 @@ bool	check_heredoc(t_data *data, t_token **token, int *i)
 	return (0);
 }
 
-bool	check_quote(t_data *data, int *i)
+t_bool	check_quote(t_data *data, int *i)
 {
 	int		quote_close;
 	char	quote;
@@ -77,13 +77,13 @@ bool	check_quote(t_data *data, int *i)
 	return (0);
 }
 
-bool	check_ques(t_data *data, t_token **token, int *i)
+t_bool	check_ques(t_data *data, t_token **token, int *i)
 {
 	char	*itoa;	
 
 	if (data->input[*i] == '?')
 	{
-		itoa = ft_itoa(data->err_code);
+		itoa = ft_itoa(g_exit_status);
 		(*token)->str = ft_strncat((*token)->str, itoa, ft_strlen(itoa));
 		free(itoa);
 		return (1);
@@ -91,7 +91,7 @@ bool	check_ques(t_data *data, t_token **token, int *i)
 	return (0);
 }
 
-bool	check_all(t_data *data, t_token **token, int *i)
+t_bool	check_all(t_data *data, t_token **token, int *i)
 {
 	if (check_heredoc(data, token, i))
 		return (1);

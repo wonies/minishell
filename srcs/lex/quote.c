@@ -19,15 +19,20 @@ void	double_quotes(t_data *data, t_token **token, int *i, int ch)
 	++(*i);
 	end = find_closing_quote(*i, data->input, '\"');
 	(void)ch;
+	(*token)->quote = T_DOUBLE;
 	if (end == 0)
 	{
 		(*token)->str = ft_strncat((*token)->str, &data->input[--(*i)], 1);
+		if (data->input[*i + 1] == ' ' || data->input[*i + 1] == '\t')
+			(*token)->blank = 1;
 		return ;
 	}
 	else if (end % 2 == 0)
 		even_quote(data, token, i, '\"');
 	else if (end % 2 != 0)
 		odd_quote(data, token, i);
+	if (data->input[*i + 1] == ' ' || data->input[*i + 1] == '\t')
+		(*token)->blank = 1;
 }
 
 void	single_quotes(t_data *data, t_token **token, int *i, int ch)
@@ -37,9 +42,12 @@ void	single_quotes(t_data *data, t_token **token, int *i, int ch)
 	++(*i);
 	end = find_closing_quote(*i, data->input, '\'');
 	(void)ch;
+	(*token)->quote = T_SINGLE;
 	if (end == 0)
 	{
 		(*token)->str = ft_strncat((*token)->str, &data->input[--(*i)], 1);
+		if (data->input[*i + 1] == ' ' || data->input[*i + 1] == '\t')
+			(*token)->blank = 1;
 		return ;
 	}
 	else if (end % 2 == 0)
@@ -49,6 +57,8 @@ void	single_quotes(t_data *data, t_token **token, int *i, int ch)
 		while (data->input[*i] != '\'')
 			(*token)->str = ft_strncat((*token)->str, &data->input[(*i)++], 1);
 	}
+	if (data->input[*i + 1] == ' ' || data->input[*i + 1] == '\t')
+		(*token)->blank = 1;
 }
 
 int	find_closing_quote(int i, char *line, char quote)

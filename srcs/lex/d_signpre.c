@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-bool	data_prev(t_data *data, t_token **token)
+t_bool	data_prev(t_data *data, t_token **token)
 {
 	t_token	*prev;
 
@@ -28,7 +28,7 @@ bool	data_prev(t_data *data, t_token **token)
 	return (0);
 }
 
-bool	pre_check(t_data *data, t_token **token)
+t_bool	pre_check(t_data *data, t_token **token)
 {
 	t_token	*prev;
 
@@ -57,7 +57,7 @@ void	inner_space_quo(t_data *data, t_token **token, int *i)
 		single_quotes(data, token, i, 1);
 }
 
-bool	two_space(t_data *data, t_token **token, int *i, int check)
+t_bool	two_space(t_data *data, t_token **token, int *i, int check)
 {
 	if (!(*token))
 		(*token) = new_token();

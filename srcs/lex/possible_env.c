@@ -30,15 +30,14 @@ void	not_env(t_data *data, t_token **token, int *i, char *var)
 			(*token)->str = ft_strncat((*token)->str, "$", 1);
 			return ;
 		}
-		(*i) += (var_len + 1);
+		++(*i);
+		if (!ft_isalnum(data->input[*i]))
+			--(*i);
 		return ;
 	}
-	(*token)->str = ft_strncat((*token)->str, "$ ", 2);
-	(*token)->str = ft_strncat((*token)->str, var, var_len);
-	(*i) -= (var_len + 1);
 }
 
-bool	possible_env(t_data *data, t_token **token, char *var)
+t_bool	possible_env(t_data *data, t_token **token, char *var)
 {
 	char	*temp;
 	char	*value;

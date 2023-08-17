@@ -1,41 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   err_msg.c                                          :+:      :+:    :+:   */
+/*   ft_cnt_args.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: donghong <donghong@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/08 22:28:11 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/17 18:34:11 by donghong         ###   ########.fr       */
+/*   Created: 2023/08/17 15:02:07 by donghong          #+#    #+#             */
+/*   Updated: 2023/08/17 15:02:08 by donghong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	err_msg(char *msg)
-{
-	perror(msg);
-	exit(errno);
-}
+int	ft_cnt_args(char **args);
 
-void	syntax_err(char *msg)
+int	ft_cnt_args(char **args)
 {
-	printf("%s\n", msg);
-	exit(2);
-}
+	int	count;
 
-void	print_exit(void)
-{
-	printf("exit\n");
-	exit(1);
-}
-
-t_bool	error_code_read(char *str, int code, int flag)
-{
-	if (flag)
-		perror(str);
-	else
-		printf("%s\n", str);
-	g_exit_status = code;
-	return (0);
+	count = 0;
+	while (*args != NULL)
+	{
+		count++;
+		args++;
+	}
+	return (count);
 }

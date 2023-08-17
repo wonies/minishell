@@ -1,41 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   err_msg.c                                          :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: donghong <donghong@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/08 22:28:11 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/17 18:34:11 by donghong         ###   ########.fr       */
+/*   Created: 2023/08/16 21:33:57 by donghong          #+#    #+#             */
+/*   Updated: 2023/08/16 22:34:25 by donghong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	err_msg(char *msg)
+void	input_free(t_data *data)
 {
-	perror(msg);
-	exit(errno);
+	int	i;
+
+	free(data->input);
+	data->input = NULL;
+	ft_lstclear(&data->tokens);
+	data->tokens = NULL;
+	free_leaf(data->root);
+	data->root = NULL;
+	free(data->pipe->com);
+	free(data->pipe);
+	i = -1;
+	while (++i < data->info->heredoc_flag)
+		free(data->info->heredoc_file[i]);
+	free(data->info->heredoc_file);
+	free(data->info);
 }
 
-void	syntax_err(char *msg)
+void	data_free(t_data *data)
 {
-	printf("%s\n", msg);
-	exit(2);
-}
-
-void	print_exit(void)
-{
-	printf("exit\n");
-	exit(1);
-}
-
-t_bool	error_code_read(char *str, int code, int flag)
-{
-	if (flag)
-		perror(str);
-	else
-		printf("%s\n", str);
-	g_exit_status = code;
-	return (0);
+	free(data->env_array);
+	ft_lstclear(&data->envs);
+	free(data);
 }

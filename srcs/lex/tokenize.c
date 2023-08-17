@@ -6,7 +6,7 @@
 /*   By: wonhshin <wonhshin@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 22:39:35 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/15 15:47:59 by wonhshin         ###   ########.fr       */
+/*   Updated: 2023/08/17 13:25:17 by wonhshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,7 @@ void	token_to_list(t_list **head, t_token **token, int check)
 {
 	t_list	*new;
 
-	new = ft_lstnew(*token);
-	if (!new)
-		return ;
+	new = ft_lstnew_token(*token);
 	if ((*token)->str[0] != '\0')
 		ft_lstadd_back(head, new);
 	else if ((*token)->type != 0)

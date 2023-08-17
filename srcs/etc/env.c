@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wonhshin <wonhshin@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: donghong <donghong@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 22:28:38 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/15 14:57:24 by wonhshin         ###   ########.fr       */
+/*   Updated: 2023/08/17 20:07:11 by donghong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_list	*ft_lstnews(void)
+t_list	*ft_lstnew(void)
 {
 	t_list	*new_node;
 
 	new_node = (t_list *)ft_calloc(1, sizeof(t_list));
 	if (!new_node)
-		return (NULL);
+		err_msg("bash");
 	return (new_node);
 }
 
@@ -30,26 +30,33 @@ void	env_init(t_data *data, char **env)
 	i = -1;
 	while (env[++i])
 	{
-		new_node = ft_lstnews();
+		new_node = ft_lstnew();
+		if (!new_node)
+			err_msg("bash");
 		new_node->env = ft_strdup(env[i]);
+		if (!new_node->env)
+			err_msg("bash");
 		ft_lstadd_back(&data->envs, new_node);
 	}
 }
 
-void	env_remove(t_data *data, char *key)
+t_bool	env_remove(t_data *data, char *key)
 {
-	char	*rem_key;
-	t_list	*cur;
+	t_list	*env;
 
-	cur = data->tokens;
-	rem_key = find_envp(data, key);
-	if (rem_key != NULL)
-		free(cur->env);
-	if (cur->pre->env)
-		cur->pre->next = cur->next;
-	if (cur->next->env)
-		cur->next->pre = cur->pre;
-	free(cur);
+	env = env_search(data, key, TRUE);
+	if (!env)
+	{
+		env = env_search(data, key, FALSE);
+		if (!env)
+			return (FALSE);
+	}
+	if (!env->pre)
+		data->envs = env->next;
+	else
+		env->pre->next = env->next;
+	ft_lstdel(env);
+	return (TRUE);
 }
 
 char	*find_envp(t_data *data, char *key)
@@ -69,5 +76,32 @@ char	*find_envp(t_data *data, char *key)
 		tmp = tmp->next;
 	}
 	free(key_equal);
+	return (NULL);
+}
+
+t_list	*env_search(t_data *data, char *key, t_bool flag)
+{
+	char	*env;
+	t_list	*cur;
+	int		len;
+
+	env = ft_strdup(key);
+	if (flag == TRUE)
+		env = ft_strncat(env, "=", 1);
+	cur = data->envs;
+	len = ft_strlen(env);
+	while (cur)
+	{
+		if (!ft_strncmp(cur->env, env, len))
+		{
+			if (flag == FALSE \
+				&& (cur->env[len] != '\0' && cur->env[len] != '='))
+				break ;
+			free(env);
+			return (cur);
+		}
+		cur = cur->next;
+	}
+	free(env);
 	return (NULL);
 }

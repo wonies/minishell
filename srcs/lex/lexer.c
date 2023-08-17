@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wonhshin <wonhshin@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: donghong <donghong@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 22:39:27 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/15 14:30:37 by wonhshin         ###   ########.fr       */
+/*   Updated: 2023/08/17 17:14:01 by donghong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,55 @@ void	free_token(t_token *token)
 	}
 }
 
+void	token_check(t_data *data, t_token *token)
+{
+	if (*(token)->str)
+	{
+		token->blank = 0;
+		token_to_list(&data->tokens, &token, 0);
+	}
+	if ((!*token->str) && token->type == 0)
+		free_token(token);
+}
+
 void	lexer(t_data *data)
 {
 	t_token	*token;
 	int		i;
+	int		len;
 
-	i = -1;
+	i = 0;
 	token = new_token();
-	if (!token)
-		err_msg("bash:");
-	while (data->input[++i])
+	len = ft_strlen(data->input);
+	while (data->input[i])
+	{
+		if (len <= i)
+		{
+			if (len < i)
+				i = len - 1;
+			break ;
+		}
 		input_token(data, &token, &i);
-	if (*(token)->str)
-		token_to_list(&data->tokens, &token, 0);
-	if ((!*token->str) && token->type == 0)
-		free_token(token);
+		++i;
+	}
+	token_check(data, token);
+}
+
+void	blank_check(t_data *data, t_token **token, int *i)
+{
+	int	blank_i;
+	int	flag;
+
+	blank_i = *i;
+	flag = 0;
+	while (data->input[blank_i])
+	{
+		if (data->input[blank_i] != ' ')
+			flag = 1;
+		blank_i++;
+	}
+	if (flag == 0)
+		(*token)->blank = 0;
 }
 
 void	input_token(t_data *data, t_token **token, int *i)
@@ -51,7 +85,8 @@ void	input_token(t_data *data, t_token **token, int *i)
 	}
 	else if (data->input[*i] == ' ' || data->input[*i] == '\t')
 	{
-		(*token)->space = 1;
+		(*token)->blank = 1;
+		blank_check(data, token, i);
 		if (*(*token)->str)
 			token_to_list(&data->tokens, token, 1);
 	}

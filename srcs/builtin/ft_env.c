@@ -1,41 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   err_msg.c                                          :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: donghong <donghong@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/08 22:28:11 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/17 18:34:11 by donghong         ###   ########.fr       */
+/*   Created: 2023/08/17 15:02:16 by donghong          #+#    #+#             */
+/*   Updated: 2023/08/17 15:02:19 by donghong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	err_msg(char *msg)
-{
-	perror(msg);
-	exit(errno);
-}
+t_bool	ft_env(t_data *data);
 
-void	syntax_err(char *msg)
+t_bool	ft_env(t_data *data)
 {
-	printf("%s\n", msg);
-	exit(2);
-}
+	char	**cmd;
+	int		arg_cnt;
 
-void	print_exit(void)
-{
-	printf("exit\n");
-	exit(1);
-}
-
-t_bool	error_code_read(char *str, int code, int flag)
-{
-	if (flag)
-		perror(str);
-	else
-		printf("%s\n", str);
-	g_exit_status = code;
-	return (0);
+	cmd = ft_join_cmd(data->root->left_child->right_child);
+	arg_cnt = ft_cnt_args(cmd);
+	if (arg_cnt != 1)
+	{
+		printf("env: %s: No such file or directory\n", cmd[1]);
+		free_d_char_ptr(cmd);
+		return (FALSE);
+	}
+	free_d_char_ptr(cmd);
+	env_print(data);
+	return (TRUE);
 }

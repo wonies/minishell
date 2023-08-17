@@ -1,41 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   err_msg.c                                          :+:      :+:    :+:   */
+/*   file.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: donghong <donghong@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/08 22:28:11 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/17 18:34:11 by donghong         ###   ########.fr       */
+/*   Created: 2023/08/17 16:57:35 by donghong          #+#    #+#             */
+/*   Updated: 2023/08/17 18:29:23 by donghong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	err_msg(char *msg)
+void	check_file(int fd, t_data *data);
+void	close_file(t_data *data);
+
+void	check_file(int fd, t_data *data)
 {
-	perror(msg);
-	exit(errno);
+	char	*str;
+
+	str = data->root->left_child->left_child->left_child->token->str;
+	if (fd < 0)
+	{
+		close(fd);
+		g_exit_status = 1;
+		error_print(str, 0, 1);
+		if (data->info->parent == 1)
+			exit(1);
+	}
 }
 
-void	syntax_err(char *msg)
+void	close_file(t_data *data)
 {
-	printf("%s\n", msg);
-	exit(2);
-}
+	int	i;
 
-void	print_exit(void)
-{
-	printf("exit\n");
-	exit(1);
-}
-
-t_bool	error_code_read(char *str, int code, int flag)
-{
-	if (flag)
-		perror(str);
-	else
-		printf("%s\n", str);
-	g_exit_status = code;
-	return (0);
+	i = -1;
+	while (++i < data->info->index)
+		unlink(data->info->heredoc_file[i]);
 }
