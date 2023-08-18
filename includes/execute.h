@@ -6,7 +6,7 @@
 /*   By: donghong <donghong@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 13:08:03 by wonhshin          #+#    #+#             */
-/*   Updated: 2023/08/17 18:44:24 by donghong         ###   ########.fr       */
+/*   Updated: 2023/08/17 21:52:48 by donghong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_bool	check_dir(char *command);
 /*parent*/
 void	wait_child_processes(t_data *data);
 
-void	check_redirect(t_leaf *leaf, t_data *data);
+int		check_redirect(t_leaf *leaf, t_data *data);
 
 int		fork_heredoc(t_data *data);
 
@@ -45,7 +45,7 @@ void	write_str(t_data *data, char *content, int fd);
 char	*set_path(t_data *data);
 void	abs_path(t_data *data);
 
-void	check_file(int fd, t_data *data);
+int		check_file(int fd, t_data *data);
 void	close_file(t_data *data);
 
 void	sig(void);

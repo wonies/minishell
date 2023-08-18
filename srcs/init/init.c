@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wonhshin <wonhshin@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: donghong <donghong@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 21:34:08 by donghong          #+#    #+#             */
-/*   Updated: 2023/08/17 21:39:02 by wonhshin         ###   ########.fr       */
+/*   Updated: 2023/08/17 21:59:49 by donghong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_bool	get_input(t_data *data)
 	if (!data->input)
 	{
 		printf("exit\n");
+		g_exit_status = 0;
 		exit(0);
 	}
 	if (check_blank_input(data->input) == TRUE)

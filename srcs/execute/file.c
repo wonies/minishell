@@ -6,16 +6,16 @@
 /*   By: donghong <donghong@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:57:35 by donghong          #+#    #+#             */
-/*   Updated: 2023/08/17 18:29:23 by donghong         ###   ########.fr       */
+/*   Updated: 2023/08/17 21:52:52 by donghong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	check_file(int fd, t_data *data);
+int		check_file(int fd, t_data *data);
 void	close_file(t_data *data);
 
-void	check_file(int fd, t_data *data)
+int	check_file(int fd, t_data *data)
 {
 	char	*str;
 
@@ -27,7 +27,9 @@ void	check_file(int fd, t_data *data)
 		error_print(str, 0, 1);
 		if (data->info->parent == 1)
 			exit(1);
+		return (0);
 	}
+	return (1);
 }
 
 void	close_file(t_data *data)

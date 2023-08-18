@@ -6,7 +6,7 @@
 /*   By: donghong <donghong@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:57:04 by donghong          #+#    #+#             */
-/*   Updated: 2023/08/17 18:41:55 by donghong         ###   ########.fr       */
+/*   Updated: 2023/08/17 21:56:23 by donghong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	check_builtin(t_data *data)
 	}
 	if (built != 0)
 	{
-		check_redirect(data->root, data);
+		if (!check_redirect(data->root, data))
+			return (1);
 		g_exit_status = exec_builtin(built, data);
 		recover_std(data);
 		return (TRUE);
